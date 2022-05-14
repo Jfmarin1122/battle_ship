@@ -15,10 +15,19 @@ class ListDE:
         count += 1
         return count
 
-    def validate_coordinate(self, coordinate: int):
+    def get_all_ships(self):
+        ships = []
+        temp = self.head
+        while temp.next is not None:
+            ships.append(temp.data)
+            temp = temp.next
+        ships.append(temp.data)
+        return ships
+
+    def validate_coordinate(self, coordinate_x: int, coordinate_y: int):
         temp = self.head
         while temp is not None:
-            if temp.data.coordinate == coordinate:
+            if temp.data.coordinate.x == coordinate_x and temp.data.coordinate.y == coordinate_y:
                 return True
             temp = temp.next
         return False

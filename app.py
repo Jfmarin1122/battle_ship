@@ -1,6 +1,8 @@
-from flask import Flask
+from flask import Flask, jsonify
+from controller.list_de_controller import app_list_de
 
 app = Flask(__name__)
+app.register_blueprint(app_list_de)
 
 
 @app.route('/')

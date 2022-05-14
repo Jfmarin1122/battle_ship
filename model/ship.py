@@ -5,6 +5,5 @@ class Ship:
             self.name = data['name']
             self.num_places = data['num_places']
             self.id = id
-
         else:
             raise Exception("Atributos no validos para crear barco")

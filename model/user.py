@@ -1,7 +1,7 @@
 from type_user import TypeUser
 
 class User:
-    def __init__(self, data, id: int, type_user: TypeUser):
+    def __init__(self, data, id:int, type_user: TypeUser):
         if 'email' in data and 'password' in data:
             self.email = data['email']
             self.password = data['password']
@@ -9,4 +9,3 @@ class User:
             self.id = id
         else:
             raise Exception("Datos no validos para crear usuario")
-

@@ -1,34 +1,26 @@
-from model.ship import Ship
 from model.list_de import ListDE
+from model.ship import Ship
+from model.ship_distribution import ShipDistribution
 
 class ListDEService:
     def __init__(self):
-        self.ships = ListDE()
+        self.list_de = ListDE()
 
     def get_all_ships(self):
-        if self.ships.head is None:
+        if self.list_de.head is None:
             return {"message": "La lista esta vacia"}
         else:
-            return self.ships.get_all_ships()
+            return self.list_de.get_all_ships()
 
-    def add_ship(self, data):
-        ship = Ship(data)
-        if self.ships.head is None:
-            return {"message": "La lista esta vacia"}
-        else:
-            self.ships.add_to_finish(ship)
+    def add_to_finish(self, data: Ship):
+        ship_dist = ShipDistribution(data)
+        self.list_de.add_to_finish(ship_dist)
+        return {"message": "Barco adicionado exitosamente"}
 
-    def add_ship_to_start(self, data):
-        ship = Ship(data)
-        if self.ships.head is None:
-            return {"message": "La lista esta vacia"}
-        else:
-            self.ships.add_to_start(ship)
+    def add_to_start(self, data: Ship):
+        ship_dist = ShipDistribution(data)
+        self.list_de.add_to_start(ship_dist)
+        return {"message": "Barco adicionado exitosamente"}
 
-    def count(self):
-        if self.ships.head is None:
-            return {"message": "La lista esta vacia"}
-        return {"la cantidad de barcos es": self.ships.count()}
-
-    def clonar(self):
-        pass
+    def clone_list(self):
+        return self.list_de.clone_list().get_all_ships()

@@ -17,7 +17,7 @@ def add_to_finish():
     data = request.json
     list_de_service.add_to_finish(Ship(data, list_de_service.list_de.count+1))
     return Response(status=200,
-                    response=json.dumps({"message": "Adicionado exitosamente"}),
+                    response=json.dumps({"message": "Barco adicionado exitosamente"}),
                                      mimetype="application/json")
 
 @app_list_de.route('/listde/add_to_start', methods=['POST'])
@@ -25,5 +25,5 @@ def add_to_start():
     data = request.json
     list_de_service.add_to_start(Ship(data, list_de_service.list_de.count+1))
     return Response(status=200,
-                    response=json.dumps({"message": "Adicionado exitosamente"}),
+                    response=json.dumps({"message": "Barco adicionado exitosamente"}),
                                      mimetype="application/json")

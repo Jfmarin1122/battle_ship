@@ -53,4 +53,3 @@ class ListDE:
             ships.add_to_finish(temp.data)
             temp = temp.next
         return ships
-

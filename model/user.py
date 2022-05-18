@@ -9,3 +9,4 @@ class User:
             self.id = id
         else:
             raise Exception("Datos no validos para crear usuario")
+

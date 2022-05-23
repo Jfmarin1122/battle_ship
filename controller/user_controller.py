@@ -1,19 +1,25 @@
-from flask import request, jsonify, Blueprint
+from flask import json, Response, request, jsonify, Blueprint
+from util.util_encoder import UtilEncoder
 from service.user_service import UserService
+from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 
-app_list_user = Blueprint("app_list_user", __name__)
+app_user = Blueprint("app_user", __name__)
+user_service = UserService()
 
-@app_list_user.route('/list_user/login', methods=['POST'])
+@app_user.route('/user')
+@jwt_required()
+def get_users():
+    return Response(status=200,
+                    response=json.dumps(user_service.get_users(),
+                                        cls=UtilEncoder), mimetype="application/json")
+
+@app_user.route('/list_user/login', methods=['POST'])
 def login():
-    data = request.get_json()
-    if data['TypeUser'] == "Administrador":
-        return UserService.token(UserService, data=request.get_json())
-    else:
-        response = jsonify({"message": "Usuario no valido"})
-        response.status_code = 404
-        return response
-
-@app_list_user.route('/list_user/verificar_token')
-def verify_token():
-    token = (request.headers['Authorization'].split(" ")[1])
-    return UserService.validate_token(UserService, token, output=True)
+    try:
+        email = request.json.get('email')
+        password = request.json.get('password')
+        user = user_service.login(email, password)
+        access_token = create_access_token(identity={'username': user})
+        return jsonify({'token': access_token})
+    except Exception as e:
+        return jsonify({'message': str(e)})

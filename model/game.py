@@ -15,7 +15,7 @@ class Game:
         self.board_player2 = None
         self.__create_boards(ship_list)
 
-    """def __create_boards(self, ship_list: ListDE):
+    def __create_boards(self, ship_list: ListDE):
         size = 0
         if self.num_ships < 10:
             size = 10
@@ -24,4 +24,19 @@ class Game:
         else:
             size = 30
         self.board_player1 = Board(1, size, size, self.player_1, ship_list)
-        self.board_player2 = Board(2, size, size, self.player_2, ship_list.clone_list())"""
+        self.board_player2 = Board(2, size, size, self.player_2, ship_list.clone_list())
+
+    def validate_shoot_game(self, x: int, y: int, player: User):
+        if player == self.player_1:
+            board = self.board_player2
+            board.validate_shoot_board(x, y)
+        elif player == self.player_2:
+            board = self.board_player1
+            board.validate_shoot_board(x, y)
+            return board
+
+    def validate_winner(self):
+        if self.hits_player1 == self.num_ships:
+            return {"message": "El jugador 1 gano"}
+        else:
+            return {"message": "El jugador 2 gano"}

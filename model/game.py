@@ -35,8 +35,8 @@ class Game:
             board.validate_shoot_board(x, y)
             return board
 
-    def validate_winner(self):
+    def __validate_winner(self):
         if self.hits_player1 == self.num_ships:
             return {"message": "El jugador 1 gano"}
-        else:
+        elif self.hits_player2 == self.num_ships:
             return {"message": "El jugador 2 gano"}

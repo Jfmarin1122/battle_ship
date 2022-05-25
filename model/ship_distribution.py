@@ -1,6 +1,5 @@
 from .ship import Ship
 from .coordinate import Coordinate
-# from .board import Board
 
 class ShipDistribution:
     def __init__(self, ship: Ship):
@@ -15,46 +14,43 @@ class ShipDistribution:
                 return True
         return False
 
-    def add_coordinate(self, x: int, y: int):
-        Coord = Coordinate(x, y, True)
-        self.places.append(Coord)
-
     def define_location(self, x: int, y: int, orientation: int):
         if orientation == 0:
             raise Exception("Orientacion no definida")
         elif orientation == 1:
             num_ships_places = self.ship.num_places
             num_validations = x + num_ships_places
-            for coordinate in range(x, num_validations + 1):
-                new_coordinate = Coordinate(coordinate, y)
-                if self.validate_coordinate(new_coordinate):
+            for coordinate_y in range(y, num_validations):
+                new_coordinate = Coordinate(coordinate_y, y, False)
+                if self.validate_coordinate(new_coordinate) is False:
+                    self.places.append(new_coordinate)
                     continue
                 else:
-                    break
+                    raise Exception({"message": "La coordenada no es valida"})
+            self.state = "POSITIONED"
         elif orientation == 2:
             num_ships_places = self.ship.num_places
             num_validations = y + num_ships_places
-            for coordinate in range(x, num_validations + 1):
-                new_coordinate = Coordinate(x, coordinate)
-                if self.validate_coordinate(new_coordinate):
+            for coordinate in range(x, num_validations):
+                new_coordinate = Coordinate(x, coordinate, False)
+                if self.validate_coordinate(new_coordinate) is False:
+                    self.places.append(new_coordinate)
                     continue
                 else:
-                    break
+                    raise Exception({"message": "La coordenada no es valida"})
+            self.state = "POSITIONED"
 
-    def validateShoot(self, x:int, y:int):
+    def validate_shoot(self, shoot_x: int, shoot_y: int):
         count = 0
-        num_Ships_Places = self.ship.num_places
+        num_ships_places = self.ship.num_places
         for coordinate in self.places:
-            if x == coordinate.x and y == coordinate.y:
-                raise Exception("Toco un barco")
-                c=Coordinate(x, y,True)
-                Table.addReceived_Shoots(c)
+            if shoot_x == coordinate.x and shoot_y == coordinate.y:
+                coordinate.state = True
+                return {"message": "Toco un barco"}
             else:
-                raise Exception("Toco un agua")
-                c=Coordinate(x,y, True)
-                Table.addReceived_Shoots(c)
+                return {"message": "Tiro al agua"}
         for x in self.places:
-            if x.state == True:
+            if x.state is True:
                 count += 1
-        if count == num_Ships_Places:
-            raise Exception("Hundio el barco")
+        if count == num_ships_places:
+            return {"message": "Barco hundido"}

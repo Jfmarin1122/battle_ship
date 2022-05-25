@@ -21,10 +21,14 @@ class Board:
                 else:
                     temp = self.ship_list.head
                     while temp is not None:
-                        ShipDistribution.validate_shoot(temp.data.places.x, temp.data.places.y)
-                        temp = temp.next
+                        for place in temp.data.places:
+                            if place in temp.data.places:
+                                ShipDistribution.validate_shoot(place.x, place.y)
+                            temp = temp.next
+                        return {"message": "Tiro al agua"}
+                    self.received_shoots.append(Coordinate(shoot_x, shoot_y, True))
         else:
             raise Exception("Coodernada fuera de dimensiones")
 
-    def addReceived_Shoots(self, c: Coordinate):
-        self.received_Shoots.append(c)
+    def add_received_shoots(self, c: Coordinate):
+        self.received_shoots.append(c)

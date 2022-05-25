@@ -38,13 +38,16 @@ class ListDE:
             self.head = self.head.previous
         self.count += 1
 
-    def validate_coordinate(self, coordinate_x: int, coordinate_y: int):
+    def validate_coordinate_list_de(self, list_coordinates: []):
         temp = self.head
         while temp is not None:
-            if temp.data.coordinate.x == coordinate_x and temp.data.coordinate.y == coordinate_y:
-                return True
-            temp = temp.next
-        return False
+            try:
+                for coordinate in range(len(list_coordinates)):
+                    if ShipDistribution.validate_coordinate():
+                        list_coordinates.state = True
+                temp = temp.next
+            except:
+                raise Exception({"Coordenadas invalidas para ubicar el barco"})
 
     def clone_list(self):
         ships = ListDE()

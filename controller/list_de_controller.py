@@ -27,3 +27,17 @@ def add_to_start():
     return Response(status=200,
                     response=json.dumps({"message": "Barco adicionado exitosamente"}),
                                      mimetype="application/json")
+
+@app_list_de.route('/create_game')
+def create_game():
+    return Response(status=200,
+                    response=json.dumps(list_de_service.create_game(),
+                                        cls=UtilEncoder), mimetype="application/json")
+
+@app_list_de.route('/define_location_ship', methods=['POST'])
+def define_location_ship():
+    data = request.json
+    list_de_service.define_location_ship(data)
+    return Response(status=200,
+                    response=json.dumps({"message": "Barcos posicionados exitosamente"}),
+                    mimetype="application/json")

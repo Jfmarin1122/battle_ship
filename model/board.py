@@ -14,7 +14,7 @@ class Board:
         self.received_shoots = []
 
     def validate_shoot_board(self, shoot_x: int, shoot_y: int):
-        if shoot_x < self.rows and shoot_y < self.cols:
+        if shoot_x < self.rows or shoot_y < self.cols:
             for shootsReceived in self.received_shoots:
                 if shoot_x == shootsReceived.x and shoot_y == shootsReceived.y:
                     raise Exception("Ya hubo un ataque en la coordenada agregada")
@@ -22,8 +22,7 @@ class Board:
                     temp = self.ship_list.head
                     while temp is not None:
                         for place in temp.data.places:
-                            if place in temp.data.places:
-                                ShipDistribution.validate_shoot(place.x, place.y)
+                            ShipDistribution.validate_shoot(place.x, place.y)
                             temp = temp.next
                         return {"message": "Tiro al agua"}
                     self.received_shoots.append(Coordinate(shoot_x, shoot_y, True))

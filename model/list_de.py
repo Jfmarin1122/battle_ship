@@ -43,7 +43,8 @@ class ListDE:
         while temp is not None:
             try:
                 for coordinate in range(len(list_coordinates)):
-                    if ShipDistribution.validate_coordinate():
+                    if ShipDistribution(temp).define_location_ship(coordinate['x'], coordinate['y'],
+                                                                   coordinate['orientation']):
                         list_coordinates.state = True
                 temp = temp.next
             except:

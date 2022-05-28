@@ -14,7 +14,7 @@ class ShipDistribution:
                 return True
         return False
 
-    def define_location(self, x: int, y: int, orientation: int):
+    def define_location_ship(self, x: int, y: int, orientation: int):
         if orientation == 0:
             raise Exception("Orientacion no definida")
         elif orientation == 1:

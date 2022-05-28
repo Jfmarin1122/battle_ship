@@ -1,4 +1,4 @@
-from board import Board
+from .board import Board
 from .user import User
 from .list_de import ListDE
 
@@ -33,7 +33,6 @@ class Game:
         elif player == self.player_2:
             board = self.board_player1
             board.validate_shoot_board(x, y)
-            return board
 
     def __validate_winner(self):
         if self.hits_player1 == self.num_ships:
